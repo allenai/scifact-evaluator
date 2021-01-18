@@ -1,10 +1,8 @@
-FROM library/python:3.7
+FROM library/python:3.9
 
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 
-COPY . .
-
-RUN mkdir /results
+COPY eval.py eval.py
 
 CMD ["/bin/bash"]
