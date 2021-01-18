@@ -9,6 +9,7 @@ https://arxiv.org/abs/2004.14974.
 import json
 from argparse import ArgumentParser
 from collections import Counter
+import re
 
 
 # Utility functions.
@@ -42,11 +43,13 @@ def unify_label(gold):
     return res
 
 
-def compute_f1(gold, retrieved, correct):
+def compute_f1(gold, retrieved, correct, title):
     precision = safe_divide(correct, retrieved)
     recall = safe_divide(correct, gold)
     f1 = safe_divide(2 * precision * recall, precision + recall)
-    return {"precision": precision, "recall": recall, "f1": f1}
+    return {f"{title}_precision": precision,
+            f"{title}_recall": recall,
+            f"{title}_f1": f1}
 
 
 ########################################
@@ -54,12 +57,14 @@ def compute_f1(gold, retrieved, correct):
 # Evaluator class.
 
 class Evaluator:
-    def __init__(self):
+    def __init__(self, verbose=False):
         self.counts_abstract = Counter()
         self.counts_sentence = Counter()
         self.allowed_labels = ["SUPPORT", "CONTRADICT"]
-         # For abstract evaluation, keep at most 3 rationale sentences.
+        # For abstract evaluation, keep at most 3 rationale sentences.
         self.max_abstract_sents = 3
+        # Whether to return all metrics or just F1.
+        self.verbose = verbose
 
     def evaluate(self, golds, preds):
         "Evaluate a list of predictions against a list of gold claims."
@@ -70,23 +75,32 @@ class Evaluator:
             self.evaluate_claim(gold, pred)
 
         # Summarize the counts.
-        res = {
-            "abstract_label_only":
-                compute_f1(self.counts_abstract["relevant"],
-                           self.counts_abstract["retrieved"],
-                           self.counts_abstract["correct_label_only"]),
-            "abstract_rationalized":
-                compute_f1(self.counts_abstract["relevant"],
-                           self.counts_abstract["retrieved"],
-                           self.counts_abstract["correct_rationalized"]),
-            "sentence_selection":
-                compute_f1(self.counts_sentence["relevant"],
-                           self.counts_sentence["retrieved"],
-                           self.counts_sentence["correct_selection"]),
-            "sentence_label":
-                compute_f1(self.counts_sentence["relevant"],
-                           self.counts_sentence["retrieved"],
-                           self.counts_sentence["correct_label"])}
+        res = {}
+
+        # Abstract evaluation, label-only.
+        res.update(compute_f1(self.counts_abstract["relevant"],
+                              self.counts_abstract["retrieved"],
+                              self.counts_abstract["correct_label_only"],
+                              "abstract_label_only"))
+        # Abstract evaluation, rationalized.
+        res.update(compute_f1(self.counts_abstract["relevant"],
+                              self.counts_abstract["retrieved"],
+                              self.counts_abstract["correct_rationalized"],
+                              "abstract_rationalized"))
+        # Sentence evaluation, selection-only
+        res.update(compute_f1(self.counts_sentence["relevant"],
+                              self.counts_sentence["retrieved"],
+                              self.counts_sentence["correct_selection"],
+                              "sentence_selection"))
+        # Sentence evaluation, selection + label
+        res.update(compute_f1(self.counts_sentence["relevant"],
+                              self.counts_sentence["retrieved"],
+                              self.counts_sentence["correct_label"],
+                              "sentence_label"))
+
+        # If not verbose, only keep the f1 metrics.
+        if not self.verbose:
+            res = {k: v for k, v in res.items() if re.match(".*_f1$", k)}
 
         return res
 
@@ -206,12 +220,14 @@ def get_args():
                         type=str,
                         help="Location of output metrics file",
                         default="metrics.json")
+    parser.add_argument("--verbose", action="store_true",
+                        help="If given, store all metrics; not just F1.")
     return parser.parse_args()
 
 
 def main():
-    evaluator = Evaluator()
     args = get_args()
+    evaluator = Evaluator(args.verbose)
     golds = load_jsonl(args.labels_file)
     golds = [unify_label(entry) for entry in golds]
     preds = load_jsonl(args.preds_file)
