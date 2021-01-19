@@ -1,0 +1,10 @@
+{"id": 1, "claim": "0-dimensional biomaterials show inductive properties.", "evidence": {}, "cited_doc_ids": [31715818]}
+{"id": 3, "claim": "1,000 genomes project enables mapping of genetic sequence variation consisting of rare variants with larger penetrance effects than common variants.", "evidence": {"14717500": [{"sentences": [2, 5], "label": "SUPPORT"}, {"sentences": [7], "label": "SUPPORT"}]}, "cited_doc_ids": [14717500]}
+{"id": 5, "claim": "1/2000 in UK have abnormal PrP positivity.", "evidence": {"13734012": [{"sentences": [4], "label": "SUPPORT"}]}, "cited_doc_ids": [13734012]}
+{"id": 13, "claim": "5% of perinatal mortality is due to low birth weight.", "evidence": {}, "cited_doc_ids": [1606628]}
+{"id": 36, "claim": "A deficiency of vitamin B12 increases blood levels of homocysteine.", "evidence": {}, "cited_doc_ids": [5152028, 11705328]}
+{"id": 42, "claim": "A high microerythrocyte count raises vulnerability to severe anemia in homozygous alpha (+)- thalassemia trait subjects.", "evidence": {"18174210": [{"sentences": [1, 9], "label": "CONTRADICT"}, {"sentences": [10], "label": "CONTRADICT"}]}, "cited_doc_ids": [18174210]}
+{"id": 48, "claim": "A total of 1,000 people in the UK are asymptomatic carriers of vCJD infection.", "evidence": {"13734012": [{"sentences": [4], "label": "CONTRADICT"}]}, "cited_doc_ids": [13734012]}
+{"id": 49, "claim": "ADAR1 binds to Dicer to cleave pre-miRNA.", "evidence": {"5953485": [{"sentences": [1], "label": "SUPPORT"}, {"sentences": [2], "label": "SUPPORT"}]}, "cited_doc_ids": [5953485]}
+{"id": 50, "claim": "AIRE is expressed in some skin tumors.", "evidence": {"12580014": [{"sentences": [1], "label": "SUPPORT"}]}, "cited_doc_ids": [12580014]}
+{"id": 51, "claim": "ALDH1 expression is associated with better breast cancer outcomes.", "evidence": {"45638119": [{"sentences": [4], "label": "CONTRADICT"}]}, "cited_doc_ids": [45638119]}
