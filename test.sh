@@ -17,7 +17,8 @@ echo Running evaluator
 echo ------------------------------
 echo
 
-OUTPUT_DIR=$(mktemp -d)
+OUTPUT_DIR=/tmp/$RANDOM.$$
+mkdir $OUTPUT_DIR
 
 docker run \
   -v $PWD/fixture/gold_small.jsonl:/data/gold_small.jsonl:ro \
