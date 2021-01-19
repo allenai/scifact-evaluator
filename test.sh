@@ -33,10 +33,7 @@ echo Metrics
 echo ------------------------------
 echo
 
-
-# TODO(dw) how do I get this to point to the expected metrics file? It's at
-# fixture/expected_metrics.json.
-EXPECTED='{"F1": 0.6666666666666666, "EM": 0.6666666666666666, "C": 0.5}'
+EXPECTED=$(cat fixture/expected_metrics.json)
 ACTUAL=$(cat $OUTPUT_DIR/metrics.json)
 
 echo Metrics obtained in file $OUTPUT_DIR/metrics.json:
