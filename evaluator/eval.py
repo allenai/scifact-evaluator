@@ -20,7 +20,7 @@ def load_jsonl(fname):
 
 def safe_divide(num, denom):
     if denom == 0:
-        return 0
+        return 0.0
     else:
         return num / denom
 

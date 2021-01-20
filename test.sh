@@ -33,7 +33,7 @@ echo Metrics
 echo ------------------------------
 echo
 
-EXPECTED=$(cat fixture/expected_metrics.json)
+EXPECTED=$(cat fixture/expected_metrics_small.json)
 ACTUAL=$(cat $OUTPUT_DIR/metrics.json)
 
 echo Metrics obtained in file $OUTPUT_DIR/metrics.json:
