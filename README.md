@@ -3,7 +3,7 @@
 This repository contains code to evaluate submissions to the [SciFact](https://arxiv.org/abs/2004.14974) leaderboard, hosted at https://leaderboard.allenai.org. SciFact data and modeling code can be found at https://github.com/allenai/scifact. Description of files and directories follow.
 
 - `evaluator/`: Contains evaluation code and environment.
-  - `eval.py`: Evaluation script to be invoked by leaderboard.
+  - `eval.py`: Evaluation script to be invoked by leaderboard. In all leaderboard code, it is invoked with the `--verbose` flag, which reports P, R, and F1 (instead of just F1).
   - `Dockerfile`: Specifies Docker env to be used when running `eval.py`.
 - `fixture/`: Contains test fixtures.
   - `predictions_dummy.jsonl`: "Dummy" prediction file for all 300 (hidden) test instances that can be submitted to the leaderboard as a test. This submission should not be publicly displayed on the leaderboard.

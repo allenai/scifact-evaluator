@@ -25,7 +25,7 @@ docker run \
   -v $PWD/fixture/predictions_small.jsonl:/predictions/predictions_small.jsonl:ro \
   -v $OUTPUT_DIR:/output:rw \
   scifact-evaluator \
-  python eval.py --labels_file /data/gold_small.jsonl --preds_file /predictions/predictions_small.jsonl --metrics_output_file /output/metrics.json
+  python eval.py --labels_file /data/gold_small.jsonl --preds_file /predictions/predictions_small.jsonl --metrics_output_file /output/metrics.json --verbose
 
 echo
 echo ------------------------------
