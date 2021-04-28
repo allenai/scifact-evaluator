@@ -58,16 +58,20 @@ def compute_f1(gold, retrieved, correct, title):
 
 class Evaluator:
     def __init__(self, verbose=False):
-        self.counts_abstract = Counter()
-        self.counts_sentence = Counter()
+        self.reset()
         self.allowed_labels = ["SUPPORT", "CONTRADICT"]
         # For abstract evaluation, keep at most 3 rationale sentences.
         self.max_abstract_sents = 3
         # Whether to return all metrics or just F1.
         self.verbose = verbose
 
+    def reset(self):
+        self.counts_abstract = Counter()
+        self.counts_sentence = Counter()
+
     def evaluate(self, golds, preds):
         "Evaluate a list of predictions against a list of gold claims."
+        self.reset()
         self.check_ordering(golds, preds)
 
         # Get counts for all predictions.
