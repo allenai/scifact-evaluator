@@ -149,8 +149,12 @@ class Evaluator:
 
         # If correctly rationalized, give credit.
         gold_rationales = [set(x) for x in gold_ev[doc_id]["rationales"]]
+
+        shortest_rationale = min([len(x) for x in gold_rationales])
+        max_abstract_sents = max(self.max_abstract_sents, shortest_rationale)
+
         # Truncate to only keep the first 3 predicted rationales.
-        pred_rationales = set(doc_pred["sentences"][:self.max_abstract_sents])
+        pred_rationales = set(doc_pred["sentences"][:max_abstract_sents])
         if self.contains_evidence(gold_rationales, pred_rationales):
             self.counts_abstract["correct_rationalized"] += 1
 
